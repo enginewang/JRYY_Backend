@@ -1,5 +1,5 @@
 # 使用官方 Golang 镜像作为构建环境
-FROM golang:1.15-buster as builder
+FROM golang:1.16-alpine as builder
 
 WORKDIR /app
 
@@ -21,6 +21,8 @@ RUN set -x && apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -
     ca-certificates && \
     rm -rf /var/lib/apt/lists/*
 
+RUN mkdir server
+RUN chmod a+x server
 # 将构建好的二进制文件拷贝进镜像
 COPY --from=builder /app/server /app/server
 
